@@ -1,0 +1,118 @@
+menu = """
+---Gestión de gastos---
+1. Agregar gasto 
+2. Eliminar gasto
+3. Ver gastos
+4. Ver resumen por categoria
+5. Calcular el total de los gastos
+6. Salir
+"""
+
+
+gastos = {
+    
+}
+
+num_gastos = 0
+bandera = True
+while bandera:
+    print(menu)
+    num_gastos = num_gastos
+    opcion = input("Ingrese una opción: ")
+    
+    if opcion == "1":
+        print("---Agregar Gasto---")
+        print(" ")
+        nombre = input("Ingrese el nombre del gasto: ")
+        if num_gastos >= 1:
+            if any(gasto["nombre"] == nombre for gasto in gastos[categoria]):
+                print("Gasto ya existente")
+            else:
+                descripcion = input("Ingrese la descripción del gasto: ")
+                categoria = input("Ingrese la categoria del gasto: ")
+                monto = int(input("Ingrese el monto del gasto: "))
+                gasto = {
+                    "nombre": nombre,
+                    "descripcion": descripcion,
+                    "monto": monto
+                }
+            
+                if categoria not in gastos:
+                    gastos[categoria]=[]
+            
+                gastos[categoria].append(gasto)
+                print("Gasto agregado")
+                num_gastos = num_gastos + 1
+        else:
+            descripcion = input("Ingrese la descripción del gasto: ")
+            categoria = input("Ingrese la categoria del gasto: ")
+            monto = int(input("Ingrese el monto del gasto: "))
+            gasto = {
+                "nombre": nombre,
+                "descripcion": descripcion,
+                "monto": monto
+            }
+            
+            if categoria not in gastos:
+                gastos[categoria]=[]
+            
+            gastos[categoria].append(gasto)
+            print("Gasto agregado")
+            num_gastos = num_gastos + 1
+   
+    elif opcion == "2":
+        print("---Eliminar Gasto---")
+        if num_gastos < 1:
+            print("No hay gastos para eliminar")
+        else:
+            categoria = input("Ingrese la categoria del gasto a eliminar: ")
+            if categoria in gastos:
+                nombre = input("Ingrese el nombre del gasto a eliminar: ")
+                encontrado = False
+                for gasto in gastos[categoria]:
+                    if gasto["nombre"] == nombre:
+                        gastos[categoria].remove(gasto)
+                        num_gastos -= 1
+                        encontrado = True
+                        print("Gasto eliminado correctamente")
+                        break
+                if not encontrado:
+                    print("Gasto no encontrado")
+            else:
+                print("Categoría no existente")      
+                 
+    elif opcion == "3":
+        print("---Ver Gastos---")
+        print(" ")
+        print("Los gastos agregados fueron los siguientes: ")
+        if num_gastos >= 1:
+             for clave, valor in gastos.items():
+                print(clave, "--->" , valor)
+        elif num_gastos <1:
+            print("No hay gastos por el momento")
+            
+    elif opcion == "4":
+        print("---Ver Gastos Por Categoria---")
+        print(" ")
+        categoria = input("Ingrese la categoria a revisar: ")
+        if categoria in gastos:
+            for gasto in gastos[categoria]:
+                print(f"  Nombre: {gasto['nombre']}, Descripción: {gasto['descripcion']}, Monto: {gasto['monto']}")
+        else:
+            print("Categoria no encontrada")
+            
+    elif opcion == "5":
+        print("---Suma de los gastos---")
+        print(" ")
+        total = 0
+        for lista_gastos in gastos.values():
+            for gastos in lista_gastos:
+                total += gasto["monto"]
+        print(f"El total de los gastos es: {total}")
+        
+    elif opcion == "6":
+        bandera = False
+        print("Hasta pronto")
+    
+    else:
+        print("Opcion no valida")
